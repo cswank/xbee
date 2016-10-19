@@ -8,19 +8,19 @@ up, and pushes messages to the coordinator the message take the form of:
 
 Where
 
-0x7E                                      - delimiter
-0x00 0x16                                 - length (from after these two bytes until the checksum)
-0x92                                      - frame type
-0x00 0x13 0xA2 0x00 0x40 0x4C 0x0E 0xBE   - long address of the sender
-0x61 0x59                                 - short address of the sender
-0x01                                      - receive options
-0x01                                      - number of samples
-0x00 0x18                                 - digital channel mask
-0x03                                      - analog channel mask
-0x00 0x10                                 - digital samples (not present if digital channel mask == 0)
-0x02 0x2F                                 - first analog sample
-0x01 0xFE                                 - second analog sample
-0x49
+    0x7E                                      - delimiter
+    0x00 0x16                                 - length (from after these two bytes until the checksum)
+    0x92                                      - frame type
+    0x00 0x13 0xA2 0x00 0x40 0x4C 0x0E 0xBE   - long address of the sender
+    0x61 0x59                                 - short address of the sender
+    0x01                                      - receive options
+    0x01                                      - number of samples
+    0x00 0x18                                 - digital channel mask
+    0x03                                      - analog channel mask
+    0x00 0x10                                 - digital samples (not present if digital channel mask == 0)
+    0x02 0x2F                                 - first analog sample
+    0x01 0xFE                                 - second analog sample
+    0x49
 
 To parse this message:
 
