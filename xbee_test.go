@@ -34,11 +34,11 @@ var _ = Describe("xbee message", func() {
 		Expect(vals["adc1"]).To(BeNumerically("~", 598.2, 0.1))
 	})
 
-	// It("gets the digital values", func() {
-	// 	vals, err := x.GetDigital()
-	// 	Expect(err).To(BeNil())
-	// 	Expect(vals).To(HaveLen(2))
-	// 	Expect(vals[0]).To(BeNumerically("~", 655.7, 0.1))
-	// 	Expect(vals[1]).To(BeNumerically("~", 598.2, 0.1))
-	// })
+	It("gets the digital values", func() {
+		vals, err := x.GetDigital()
+		Expect(err).To(BeNil())
+		Expect(vals).To(HaveLen(2))
+		Expect(vals[0]).To(BeNumerically("~", 655.7, 0.1))
+		Expect(vals[1]).To(BeNumerically("~", 598.2, 0.1))
+	})
 })

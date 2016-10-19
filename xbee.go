@@ -24,6 +24,7 @@ type Message struct {
 
 var (
 	adc = []string{"adc0", "adc1", "adc2", "adc3"}
+	dio = []string{"dio0", "dio1", "dio2", "dio3", "dio4", "dio5", "dio6", "dio7", "dio8", "dio9", "dio10", "dio11", "dio12"}
 )
 
 //NewMessage parses a xbee messsage (from the 3rd byte on).
@@ -77,6 +78,32 @@ func (x *Message) GetAnalog() (map[string]float64, error) {
 		if uint8(1<<uint8(i))&x.AnalogChanMask > 0 {
 			x := f[j]
 			m[o] = 1200.0 * float64(x) / float64(1023)
+			j++
+		}
+	}
+	return m, nil
+}
+
+func (x *Message) GetDigital() (map[string]bool, error) {
+	m := map[string]bool{}
+	if x.DigitalChanMask == 0 {
+		return m, nil
+	}
+
+	payload := x.payload()[:3]
+
+	var val uint16
+	buf := bytes.NewReader(payload)
+	err := binary.Read(buf, binary.BigEndian, &val)
+	if err != nil {
+		return nil, err
+	}
+
+	var j int
+	for i, o := range dio {
+		if uint16(1<<uint16(i))&x.DigitalChanMask > 0 {
+			x := val & (1 << uint16(i))
+			m[o] = x > 0
 			j++
 		}
 	}
