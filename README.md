@@ -60,6 +60,7 @@ The output will be:
 
 ## Setting Up a Pair XBees
 
+Using two Pro S2B Xbees, I was able to get a proof of concept setup working.
 You need to set up a coordinator and a router.  For the coordinator load the
 "Coordinator API" firmware and apply these settings:
 
@@ -182,3 +183,7 @@ For the router load the "Router API" firmware and apply these settings:
         </settings>
       </profile>
     </data>
+
+The above xml files can be loaded onto the XBees by using XCTU.  Once you add the radio
+module to the user interface you can click on the "Profile" dropdown then click "Load
+configuration profile".
