@@ -187,3 +187,12 @@ For the router load the "Router API" firmware and apply these settings:
 The above xml files can be loaded onto the XBees by using XCTU.  Once you add the radio
 module to the user interface you can click on the "Profile" dropdown then click "Load
 configuration profile".
+
+
+## Command line tool
+
+You can watch the values on the command line by:
+
+    cd cmd/xbee
+    go install
+    xbee /dev/<path to tty serial device your xbee is connected to>
