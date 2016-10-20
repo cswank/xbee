@@ -5,9 +5,8 @@ import (
 	"log"
 	"os"
 
-	"go.bug.st/serial.v1"
-
 	"github.com/cswank/xbee"
+	"go.bug.st/serial.v1"
 )
 
 func main() {
@@ -30,7 +29,7 @@ func main() {
 			log.Println(err)
 		} else {
 			for k, v := range a {
-				fmt.Printf("%s: %.2f", k, v)
+				fmt.Printf("%s: %.2f\n", k, v)
 			}
 		}
 	}
