@@ -27,6 +27,12 @@ var (
 	dio = []string{"dio0", "dio1", "dio2", "dio3", "dio4", "dio5", "dio6", "dio7", "dio8", "dio9", "dio10", "dio11", "dio12"}
 )
 
+func GetLength(data []byte) (uint16, error) {
+	buf := bytes.NewReader(data)
+	var l uint16
+	return l, binary.Read(buf, binary.BigEndian, &l)
+}
+
 //NewMessage parses a xbee messsage (from the 3rd byte on).
 //The first 3 bytes are used to detect the beginning of a new
 //message and the length of the message so are only useful for
