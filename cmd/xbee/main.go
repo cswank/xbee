@@ -25,11 +25,12 @@ func main() {
 	for {
 		msg := xbee.ReadMessage(port)
 		a, err := msg.GetAnalog()
+		addr := msg.GetAddr()
 		if err != nil {
 			log.Println(err)
 		} else {
 			for k, v := range a {
-				fmt.Printf("%s: %.2f\n", k, v)
+				fmt.Printf("%s - %s: %.2f\n", addr, k, v)
 			}
 		}
 	}
