@@ -38,7 +38,9 @@ var _ = Describe("xbee message", func() {
 		vals, err := x.GetDigital()
 		Expect(err).To(BeNil())
 		Expect(vals).To(HaveLen(2))
-		Expect(vals[0]).To(BeNumerically("~", 655.7, 0.1))
-		Expect(vals[1]).To(BeNumerically("~", 598.2, 0.1))
+		v, ok := vals["dio3"]
+		Expect(ok).To(BeTrue())
+		Expect(v).To(BeFalse())
+		Expect(vals["dio4"]).To(BeTrue())
 	})
 })
