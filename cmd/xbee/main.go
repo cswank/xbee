@@ -9,12 +9,16 @@ import (
 	"go.bug.st/serial.v1"
 )
 
-func main() {
+var (
+	verbose bool
+)
 
+func main() {
 	args := os.Args[1:]
 	if len(args) < 1 {
 		log.Fatal("you must pass in the /dev/tty port")
 	}
+	verbose = len(args) > 1 && args[1] == "-v"
 
 	mode := &serial.Mode{}
 	port, err := serial.Open(args[0], mode)
