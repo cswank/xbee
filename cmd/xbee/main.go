@@ -3,31 +3,32 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/cswank/xbee"
 	serial "go.bug.st/serial.v1"
+	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
 var (
-	verbose bool
+	port = kingpin.Arg("serial-port", "serial port from which to read").Required().String()
 )
 
-func main() {
-	args := os.Args[1:]
-	if len(args) < 1 {
-		log.Fatal("you must pass in the /dev/tty port")
-	}
-	verbose = len(args) > 1 && args[1] == "-v"
+func init() {
+	kingpin.Parse()
+}
 
-	mode := &serial.Mode{}
-	port, err := serial.Open(args[0], mode)
+func main() {
+	port, err := serial.Open(*port, &serial.Mode{})
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for {
-		msg := xbee.ReadMessage(port)
+		msg, err := xbee.ReadMessage(port)
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		a, err := msg.GetAnalog()
 		if err != nil {
 			log.Fatal(err)
