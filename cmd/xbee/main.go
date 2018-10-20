@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/cswank/xbee"
-	"go.bug.st/serial.v1"
+	serial "go.bug.st/serial.v1"
 )
 
 var (
@@ -29,13 +29,21 @@ func main() {
 	for {
 		msg := xbee.ReadMessage(port)
 		a, err := msg.GetAnalog()
-		addr := msg.GetAddr()
 		if err != nil {
-			log.Println(err)
-		} else {
-			for k, v := range a {
-				fmt.Printf("%s - %s: %.2f\n", addr, k, v)
-			}
+			log.Fatal(err)
+		}
+
+		d, err := msg.GetDigital()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		addr := msg.GetAddr()
+		for k, v := range a {
+			fmt.Printf("%s - %s: %.2f\n", addr, k, v)
+		}
+		for k, v := range d {
+			fmt.Printf("%s - %s: %t\n", addr, k, v)
 		}
 	}
 }
