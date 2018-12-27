@@ -1,35 +1,34 @@
 package xbee
 
 import (
-	"log"
-
 	"go.bug.st/serial.v1"
 )
 
-func ReadMessage(port serial.Port) Message {
+func ReadMessage(port serial.Port, opts ...func()) (Message, error) {
+	var msg Message
+
 	for {
 		getDelimiter(port)
 		d := make([]byte, 2)
 		n, err := port.Read(d)
 		if err != nil || n != 2 {
-			continue
+			return msg, err
 		}
 
 		l, err := GetLength(d)
 		if err != nil {
-			continue
-
+			return msg, err
 		}
 
 		d = []byte{}
 		d, err = getBody(d, port, int(l+1))
 		if err != nil {
-			continue
+			return msg, err
 		}
 
 		msg, err := NewMessage(d)
 		if err == nil {
-			return msg
+			return msg, nil
 		}
 	}
 }
@@ -39,10 +38,9 @@ func getDelimiter(port serial.Port) {
 		d := make([]byte, 1)
 		n, err := port.Read(d)
 		if err != nil || n != 1 {
-			log.Println(n, err)
 			continue
-
 		}
+
 		if d[0] == 0x7E {
 			return
 		}

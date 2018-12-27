@@ -52,7 +52,7 @@ func NewMessage(data []byte) (Message, error) {
 	}
 
 	if !msg.Check() {
-		err = fmt.Errorf("message failed checksum")
+		err = fmt.Errorf("message failed checksum: 0x%x", msg.getChecksum())
 	}
 	return msg, err
 }
@@ -78,7 +78,7 @@ func (x *Message) GetAnalog() (map[string]float64, error) {
 	for i, o := range adc {
 		if uint8(1<<uint8(i))&x.AnalogChanMask > 0 {
 			x := vals[j]
-			m[o] = 1200.0 * float64(x) / float64(1023)
+			m[o] = 1200.0 * float64(x) / 1023.0
 			j++
 		}
 	}
@@ -127,13 +127,18 @@ func (x *Message) getRawDigital() (uint16, error) {
 	return val, binary.Read(buf, binary.BigEndian, &val)
 }
 
-func (x *Message) Check() bool {
+func (x *Message) getChecksum() byte {
 	var total byte
 	for _, item := range x.frame[:len(x.frame)-1] {
 		total += item
 	}
+	return 0xff - total
+}
+
+func (x *Message) Check() bool {
+
 	cs := x.frame[len(x.frame)-1]
-	return 0xff-total == cs
+	return x.getChecksum() == cs
 }
 
 func (x *Message) GetAddr() string {

@@ -1,8 +1,8 @@
 # xbee
-A package for parsing automatic xbee packets.
 
-This a single-purposed xbee package - when you have an xbee(s) that sleeps, wakes
-up, and pushes messages to the coordinator the message take the form of:
+A package for parsing xbee packets sent from a router to a coordinator.
+
+## Example data:
 
     []byte{0x7E, 0x00, 0x16, 0x92, 0x00, 0x13, 0xA2, 0x00, 0x40, 0x4C, 0x0E, 0xBE, 0x61, 0x59, 0x01, 0x01, 0x00, 0x18, 0x03, 0x00, 0x10, 0x02, 0x2F, 0x01, 0xFE, 0x49}
 
@@ -58,11 +58,10 @@ The output will be:
     dio4: true
 
 
-## Setting Up a Pair of XBees (wake on a schedule)
+## Setting Up a Pair of Series 2 XBees
 
-Using two Pro S2B Xbees, I was able to get a proof of concept setup working.
-You need to set up a coordinator and a router.  For the coordinator load the
-"Coordinator API" firmware and apply these settings:
+### Coordinator
+In xctu Load the "Coordinator API" firmware and apply these settings:
 
     <?xml version="1.0" encoding="UTF-8"?>
 
@@ -120,7 +119,9 @@ You need to set up a coordinator and a router.  For the coordinator load the
       </profile>
     </data>
 
-For the router load the "Router API" firmware and apply these settings:
+### Router
+
+Load the "Router API" firmware and apply these settings:
 
     <?xml version="1.0" encoding="UTF-8"?>
 
